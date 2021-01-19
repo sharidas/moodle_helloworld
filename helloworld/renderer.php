@@ -43,16 +43,16 @@
             echo '<div class="card-columns">';
             foreach ($db_records as $record) {
                 $time->setTimestamp(intval($record->timecreated));
-                echo '<div class="card text-center">
-                    <div class="card-body">
-                    <p class="card-text">' . $record->message . '</p>
-                    <p class="card-text"><small class="text-muted">' . userdate($time->getTimestamp()) . '</small></p>';
-                if (has_capability('local/helloworld:deletemessage', $usercontext)) {
-                    echo '<button class="btn fa fa-trash-o" type="submit"></button>';
-                }
-                echo '<div userid="'. $record->userid .'" timecreated="' . $record->timecreated. '" hidden></div>
-                    </div>
-                </div>';
+
+                $templatecontext = [
+                    'userid' => $record->userid,
+                    'message' => $record->message,
+                    'display_date_time' => userdate($time->getTimestamp()),
+                    'timecreated' => $record->timecreated,
+                    'can_delete' => has_capability('local/helloworld:deletemessage', $usercontext)
+                ];
+
+                echo $this->render_from_template('local_helloworld/helloworld_posts', $templatecontext);
             }
             echo '</div>';
         }
