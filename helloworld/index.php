@@ -11,6 +11,7 @@
 
  require_once('../../config.php');
  require_once('./hellolib.php');
+  require_once("$CFG->dirroot/local/helloworld/displayposts.php");
  //require_once('./name_display.php');
 
  require_login();
@@ -99,6 +100,7 @@ echo $OUTPUT->box(get_string('greeting', 'local_helloworld', format_string($name
 echo "<br>";
 
 
-$output->list_messages();
+$displaypost = new display_posts();
+echo $displaypost->display_posts_with_capability();
 
 echo $OUTPUT->footer();

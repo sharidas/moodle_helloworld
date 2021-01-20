@@ -32,6 +32,14 @@
           }
       }
 
+      /**
+       * This method echo's the rendered mustache template
+       *
+       * This was the first version of the template used.
+       * Now no longer used in the code.
+       *
+       * @return void
+       */
       public function list_messages() {
         if (isloggedin() && !isguestuser()) {
             global $DB, $USER;
@@ -52,9 +60,24 @@
                     'can_delete' => has_capability('local/helloworld:deletemessage', $usercontext)
                 ];
 
-                echo $this->render_from_template('local_helloworld/helloworld_posts', $templatecontext);
+                echo $this->render_from_template('local_helloworld/list_posts', $templatecontext);
             }
             echo '</div>';
         }
+      }
+
+      /**
+       * This method returns the template rendered with the context data
+       *
+       * @param helloworld_list_posts $listposts
+       * @return string
+       */
+      public function render_helloworld_list_posts(helloworld_list_posts $listposts) : string {
+          $out = '';
+
+          $context = $listposts->export_for_template($this);
+          $out .= $this->render_from_template('local_helloworld/list_posts', $context);
+
+          return $out;
       }
   }
