@@ -9,9 +9,11 @@
  *  display posts
  */
 
- defined('MOODLE_INTERNAL') || die;
+use local_helloworld\output\helloworld_list_posts;
 
- require_once("$CFG->dirroot/local/helloworld/renderable.php");
+defined('MOODLE_INTERNAL') || die;
+
+ //equire_once("$CFG->dirroot/local/helloworld/renderable.php");
 
 
  class display_posts {
@@ -28,7 +30,6 @@
 
             $can_delete = has_capability('local/helloworld:deletemessage', $usercontext);
             $out = '<div class="card-columns">';
-            //echo '<div class="card-columns">';
             foreach ($db_records as $record) {
                 $time->setTimestamp(intval($record->timecreated));
                 $helloworld_post = new helloworld_list_posts(
@@ -40,7 +41,6 @@
 
                 $out .= $output->render($helloworld_post);
             }
-            //echo '</div>';
             $out .= '</div>';
         }
 

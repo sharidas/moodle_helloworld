@@ -12,8 +12,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once("$CFG->libdir/externallib.php");
-require_once("$CFG->dirroot/local/helloworld/hellolib.php");
-require_once("$CFG->dirroot/local/helloworld/lib.php");
+#require_once("$CFG->dirroot/local/helloworld/hellolib.php");
+#require_once("$CFG->dirroot/local/helloworld/lib.php");
 
 class local_helloworld_external extends external_api {
 

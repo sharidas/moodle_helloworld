@@ -9,8 +9,12 @@
  * 
  */
 
- require_once('../../config.php');
- require_once('./hellolib.php');
+use core\plugininfo\local;
+use local_helloworld\form\hello_form;
+use local_helloworld\page_update;
+
+require_once('../../config.php');
+ #require_once('./hellolib.php');
   require_once("$CFG->dirroot/local/helloworld/displayposts.php");
  //require_once('./name_display.php');
 
@@ -37,7 +41,7 @@
  $PAGE->set_context($context);
  $PAGE->set_pagelayout('standard');
  $PAGE->set_title(get_string('welcome', 'local_helloworld'));
- $headingStr = 'Hello ' . (string)$name . '!';
+ $headingStr = 'Hello ' . get_string('greeting', 'local_helloworld', format_string($name)) . '!';
  $PAGE->set_heading($headingStr);
  
  $PAGE->requires->js_call_amd('local_helloworld/hello_post_delete', 'init');
@@ -45,7 +49,8 @@
  $PAGE->set_url(new moodle_url('/local/helloworld', ['sesskey' => sesskey()]));
 
 //form display
-$form = new local_hello_form();
+$form = new hello_form();
+//$form = new local_hello_form();
 
 if ($form->is_validated() && $form->is_submitted()) {
     /**
@@ -81,14 +86,8 @@ if ($form->is_validated() && $form->is_submitted()) {
      */
     $time = new DateTime('now', core_date::get_user_timezone_object());
 
-    $DB->insert_record(
-        'local_helloworld', 
-        [
-            'message' => $textdata,
-            'timecreated' => $time->getTimestamp(),
-            'userid' => $USER->id,
-        ]
-    );
+    $page_update = new page_update();
+    $page_update->add_post('local_helloworld', $textdata, $time->getTimestamp(), $USER->id);
 
     redirect(new moodle_url('/local/helloworld', ['sesskey' => sesskey()]));
 }
@@ -98,7 +97,6 @@ echo $OUTPUT->header();
 $form->display();
 echo $OUTPUT->box(get_string('greeting', 'local_helloworld', format_string($name)));
 echo "<br>";
-
 
 $displaypost = new display_posts();
 echo $displaypost->display_posts_with_capability();

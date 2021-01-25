@@ -9,7 +9,12 @@
  *  Renderable for helloworld plugin
  */
 
+namespace local_helloworld\output;
 use core\message\message;
+use renderable;
+use renderer_base;
+use stdClass;
+use templatable;
 
 defined('MOODLE_INTERNAL') || die;
 
@@ -48,11 +53,12 @@ class helloworld_list_posts implements renderable, templatable {
     public function export_for_template(renderer_base $output)
     {
         $export = new stdClass();
-        $export->message = $this->message;
-        $export->display_date_time = $this->display_date_time;
-        $export->can_delete = $this->can_delete;
-        $export->userid = $this->userid;
-        $export->timecreated = $this->timecreated;
+        $export->records = [];
+        $export->records['message'] = $this->message;
+        $export->records['display_date_time'] = $this->display_date_time;
+        $export->records['can_delete'] = $this->can_delete;
+        $export->records['userid'] = $this->userid;
+        $export->records['timecreated'] = $this->timecreated;
 
         return $export;
     }

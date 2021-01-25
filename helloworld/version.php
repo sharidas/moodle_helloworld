@@ -8,5 +8,5 @@
  *  This is for version
  */
 $plugin->component = 'local_helloworld';
-$plugin->version = 2020081815;
+$plugin->version = 2020081816;
 

@@ -14,7 +14,7 @@
      'local_helloworld_delete_posts' => [
          'classname' => 'local_helloworld_external',
          'methodname' => 'local_helloworld_delete_posts',
-         'classpath' => 'local/helloworld/externallib.php',
+         'classpath' => 'local/helloworld/classes/external.php',
          'description' => 'Deletes the posts as manager in hello world plugin',
          'type' => 'write',
          'ajax' => true,
